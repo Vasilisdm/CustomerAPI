@@ -13,5 +13,6 @@
     <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="DbContext\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 </Project>
