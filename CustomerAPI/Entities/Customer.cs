@@ -14,7 +14,6 @@ namespace CustomerAPI.Entities
 
         public string LastName { get; set; }
 
-        [ForeignKey("AccountId")]
         public ICollection<Account> Account { get; set; } = new List<Account>();
     }
 }

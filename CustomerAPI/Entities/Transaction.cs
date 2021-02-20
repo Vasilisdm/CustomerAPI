@@ -7,11 +7,10 @@ namespace CustomerAPI.Entities
     {
         public Guid Id { get; set; }
 
-        public int Transact { get; set; }
+        public decimal Amount { get; set; }
 
         public Guid AccountId { get; set; }
 
-        [ForeignKey("AccountId")]
         public Account Account { get; set; }
     }
 }
