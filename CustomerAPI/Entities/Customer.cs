@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerAPI.Entities
 {
@@ -14,6 +13,6 @@ namespace CustomerAPI.Entities
 
         public string LastName { get; set; }
 
-        public ICollection<Account> Account { get; set; } = new List<Account>();
+        public ICollection<Account> Accounts { get; set; } = new List<Account>();
     }
 }
