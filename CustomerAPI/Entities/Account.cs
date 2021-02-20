@@ -9,7 +9,7 @@ namespace CustomerAPI.Entities
         [Key]
         public Guid Id { get; set; }
 
-        public int Balanace { get; set; }
+        public decimal Balance { get; set; }
 
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 
