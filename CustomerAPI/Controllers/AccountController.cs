@@ -1,4 +1,5 @@
 ﻿using System;
+using CustomerAPI.Entities;
 using CustomerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,12 +29,15 @@ namespace CustomerAPI.Controllers
 
 
        [HttpPost("{initialCredit}")]
-       public ActionResult OpenAccountForCustomer(Guid customerId,int initialCredit)
+       public ActionResult OpenAccountForCustomer(Guid customerId, int initialCredit)
         {
             if (!_customerRepository.CustomerExists(customerId))
             {
                 return NotFound();
             }
+
+            _accountRepository.OpenAccount(customerId);
+            _accountRepository.SaveAccount();
 
             var customerFromRepo = _customerRepository.GetCustomer(customerId);
 
