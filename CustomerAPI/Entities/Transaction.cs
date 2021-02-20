@@ -9,9 +9,9 @@ namespace CustomerAPI.Entities
 
         public int Transact { get; set; }
 
+        public Guid AccountId { get; set; }
+
         [ForeignKey("AccountId")]
         public Account Account { get; set; }
-
-        public Guid AccountId { get; set; }
     }
 }

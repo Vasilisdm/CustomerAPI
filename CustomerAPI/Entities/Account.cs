@@ -14,9 +14,9 @@ namespace CustomerAPI.Entities
 
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
-
         public Guid CustomerId { get; set; }
+
+        [ForeignKey("CustomerId")] 
+        public Customer Customer { get; set; }
     }
 }
