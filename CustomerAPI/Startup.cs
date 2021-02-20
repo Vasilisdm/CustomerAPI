@@ -23,6 +23,7 @@ namespace CustomerAPI
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             services.AddDbContext<AccountContext>(opt =>
                 opt.UseSqlite(Configuration.GetConnectionString("AccountContext")));
