@@ -10,11 +10,13 @@ namespace CustomerAPI.Entities
         [Key]
         public Guid Id { get; set; }
 
+        public int Balanace { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+
         [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
-        public int Balanace { get; set; }
-
-        public List<int> Transactions { get; set; }
+        public Guid CustomerId { get; set; }
     }
 }

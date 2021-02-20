@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,11 +10,11 @@ namespace CustomerAPI.Entities
         [Key]
         public Guid Id { get; set; }
 
-        [ForeignKey("AccountId")]
-        public Account Account { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        [ForeignKey("AccountId")]
+        public ICollection<Account> Account { get; set; } = new List<Account>();
     }
 }
