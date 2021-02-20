@@ -1,15 +1,35 @@
 ﻿using System;
+using CustomerAPI.Entities;
+
 namespace CustomerAPI.Services
 {
     public class AccountRepository : IAccountRepository
     {
-        public AccountRepository()
+        private readonly AccountContext _accountContext;
+
+        public AccountRepository(AccountContext accountContext)
         {
+            _accountContext = accountContext ??
+                throw new ArgumentNullException(nameof(accountContext));
         }
 
-        public void OpenAccount()
+        public void OpenAccount(Guid customerId)
         {
-            throw new NotImplementedException();
+            if (customerId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(customerId));
+            }
+
+            var newAccountForCustomer = new Account();
+            newAccountForCustomer.Id = Guid.NewGuid();
+            newAccountForCustomer.CustomerId = customerId;
+
+            _accountContext.Accounts.Add(newAccountForCustomer);
+        }
+
+        public bool SaveAccount()
+        {
+            return (_accountContext.SaveChanges() >= 0);
         }
     }
 }
