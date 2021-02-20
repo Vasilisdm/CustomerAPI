@@ -20,9 +20,11 @@ namespace CustomerAPI.Services
                 throw new ArgumentNullException(nameof(customerId));
             }
 
-            var newAccountForCustomer = new Account();
-            newAccountForCustomer.Id = Guid.NewGuid();
-            newAccountForCustomer.CustomerId = customerId;
+            var newAccountForCustomer = new Account
+            {
+                Id = Guid.NewGuid(),
+                CustomerId = customerId
+            };
 
             _accountContext.Accounts.Add(newAccountForCustomer);
         }
