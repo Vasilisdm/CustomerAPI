@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CustomerAPI.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerAPI.Services
 {
@@ -31,7 +32,9 @@ namespace CustomerAPI.Services
                 throw new ArgumentNullException(nameof(customerId));
             }
 
-            return _accountContext.Customers.FirstOrDefault(customer => customer.Id == customerId);
+            return _accountContext.Customers
+                .Include(customer => customer.Account)
+                .FirstOrDefault(customer => customer.Id == customerId);
         }
     }
 }
