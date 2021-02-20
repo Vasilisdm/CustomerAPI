@@ -29,19 +29,45 @@ namespace CustomerAPI.Controllers
 
 
        [HttpPost("{initialCredit}")]
-       public ActionResult OpenAccountForCustomer(Guid customerId, int initialCredit)
+       public ActionResult OpenAccountForCustomer(Guid customerId, decimal initialCredit)
         {
             if (!_customerRepository.CustomerExists(customerId))
             {
                 return NotFound();
             }
 
-            _accountRepository.OpenAccount(customerId);
+            var newAccountId = _accountRepository.OpenAccount(customerId);
             _accountRepository.SaveAccount();
 
-            var customerFromRepo = _customerRepository.GetCustomer(customerId);
+            if (initialCredit != 0)
+            {
+                var account = GetAccount(newAccountId);
+                
+                _transactionRepository.MakeTransaction(account, initialCredit);
+
+                _transactionRepository.SaveTransaction();
+
+                _accountRepository.ChangeBalance(account, initialCredit);
+
+                _accountRepository.SaveAccount();
+
+                //var customerFromRepo = _customerRepository.GetCustomer(customerId);
+            }
 
             return Ok();
         }
+
+
+        #region HelperMethods
+        private Account GetAccount(Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+
+            return _accountRepository.GetAccount(accountId);
+        }
+        #endregion
     }
 }
