@@ -33,7 +33,7 @@ namespace CustomerAPI.Services
             }
 
             return _accountContext.Customers
-                .Include(customer => customer.Account)
+                .Include(customer => customer.Accounts)
                 .FirstOrDefault(customer => customer.Id == customerId);
         }
     }
