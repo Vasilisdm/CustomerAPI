@@ -1,15 +1,32 @@
 ﻿using System;
+using CustomerAPI.Entities;
+
 namespace CustomerAPI.Services
 {
     public class TransactionRepository : ITransactionRepository
     {
-        public TransactionRepository()
+        private readonly AccountContext _accountContext;
+
+        public TransactionRepository(AccountContext accountContext)
         {
+            _accountContext = accountContext ??
+                throw new ArgumentNullException(nameof(accountContext));
         }
 
-        public int Make()
+        public void MakeTransaction(Account account, decimal credit)
         {
-            throw new NotImplementedException();
+            var accountTransaction = new Transaction()
+            {
+                AccountId = account.Id,
+                Amount = credit
+            };
+
+            _accountContext.Transactions.Add(accountTransaction);
+        }
+
+        public bool SaveTransaction()
+        {
+            return (_accountContext.SaveChanges() >= 0);
         }
     }
 }
