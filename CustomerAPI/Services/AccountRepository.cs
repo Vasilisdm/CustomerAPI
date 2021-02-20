@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CustomerAPI.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CustomerAPI.Services
 {
@@ -13,7 +15,7 @@ namespace CustomerAPI.Services
                 throw new ArgumentNullException(nameof(accountContext));
         }
 
-        public void OpenAccount(Guid customerId)
+        public Guid OpenAccount(Guid customerId)
         {
             if (customerId == Guid.Empty)
             {
@@ -22,11 +24,28 @@ namespace CustomerAPI.Services
 
             var newAccountForCustomer = new Account
             {
-                Id = Guid.NewGuid(),
                 CustomerId = customerId
             };
 
             _accountContext.Accounts.Add(newAccountForCustomer);
+
+            return newAccountForCustomer.Id;
+        }
+
+        public Account GetAccount(Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+
+            return _accountContext.Accounts.FirstOrDefault(account => account.Id == accountId);
+        }
+
+        public void ChangeBalance(Account account, decimal credit)
+        {
+            account.Balance += credit;
+            _accountContext.Entry(account).State = EntityState.Modified;
         }
 
         public bool SaveAccount()

@@ -6,7 +6,9 @@ namespace CustomerAPI.Services
 {
     public interface IAccountRepository
     {
-        public void OpenAccount(Guid customerId);
+        public Guid OpenAccount(Guid customerId);
+        public Account GetAccount(Guid accountId);
+        public void ChangeBalance(Account account, decimal credit);
         public bool SaveAccount();
     }
 }
