@@ -34,6 +34,7 @@ namespace CustomerAPI.Services
 
             return _accountContext.Customers
                 .Include(customer => customer.Accounts)
+                .ThenInclude(account => account.Transactions)
                 .FirstOrDefault(customer => customer.Id == customerId);
         }
     }
