@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CustomerAPI.Models
 {
@@ -10,5 +11,6 @@ namespace CustomerAPI.Models
 
         public decimal Balance { get; set; }
 
+        public List<TransactionDTO> Transactions { get; set; }
     }
 }
