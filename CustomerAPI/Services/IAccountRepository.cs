@@ -8,6 +8,7 @@ namespace CustomerAPI.Services
     {
         public Guid OpenAccount(Guid customerId);
         public Account GetAccount(Guid accountId);
+        public Account GetAccountForCustomer(Guid customerId, Guid accountId);
         public void ChangeBalance(Account account, decimal credit);
         public bool SaveAccount();
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+using AutoMapper;
 using CustomerAPI.Entities;
+using CustomerAPI.Models;
 using CustomerAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,10 +14,12 @@ namespace CustomerAPI.Controllers
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionRepository _transactionRepository;
         private readonly ICustomerRepository _customerRepository;
+        private readonly IMapper _mapper;
 
         public AccountController(IAccountRepository accountRepository,
             ITransactionRepository transactionRepository,
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+            IMapper mapper)
         {
             _accountRepository = accountRepository ??
                 throw new ArgumentNullException(nameof(accountRepository));
@@ -25,11 +29,31 @@ namespace CustomerAPI.Controllers
 
             _customerRepository = customerRepository ??
                 throw new ArgumentNullException(nameof(customerRepository));
+
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
         }
 
 
-       [HttpPost("{initialCredit}")]
-       public ActionResult OpenAccountForCustomer(Guid customerId, decimal initialCredit)
+        [HttpGet("{accountId}", Name = "GetAccountForCustomer")]
+        public ActionResult<AccountDTO> GetAccountForCustomer(Guid customerId, Guid accountId)
+        {
+            if (!_customerRepository.CustomerExists(customerId))
+            {
+                return NotFound();
+            }
+
+            var accountForCustomer = _accountRepository.GetAccountForCustomer(customerId, accountId);
+            if (accountForCustomer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<AccountDTO>(accountForCustomer));
+        }
+
+        [HttpPost("{initialCredit}")]
+        public ActionResult<AccountDTO> OpenAccountForCustomer(Guid customerId, decimal initialCredit)
         {
             if (!_customerRepository.CustomerExists(customerId))
             {
@@ -39,10 +63,10 @@ namespace CustomerAPI.Controllers
             var newAccountId = _accountRepository.OpenAccount(customerId);
             _accountRepository.SaveAccount();
 
+            var account = GetAccount(newAccountId);
+
             if (initialCredit != 0)
             {
-                var account = GetAccount(newAccountId);
-                
                 _transactionRepository.MakeTransaction(account, initialCredit);
 
                 _transactionRepository.SaveTransaction();
@@ -54,7 +78,12 @@ namespace CustomerAPI.Controllers
                 //var customerFromRepo = _customerRepository.GetCustomer(customerId);
             }
 
-            return Ok();
+            var accountToReturn = _mapper.Map<AccountDTO>(account);
+
+            return CreatedAtRoute("GetAccountForCustomer", new {
+                customerId,
+                accountId = newAccountId
+            }, accountToReturn);
         }
 
 

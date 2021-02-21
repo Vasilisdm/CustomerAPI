@@ -42,6 +42,18 @@ namespace CustomerAPI.Services
             return _accountContext.Accounts.FirstOrDefault(account => account.Id == accountId);
         }
 
+        public Account GetAccountForCustomer(Guid customerId, Guid accountId)
+        {
+            if (accountId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+
+            return _accountContext.Accounts
+                .FirstOrDefault(account => account.Id == accountId
+                && account.CustomerId == customerId);
+        }
+
         public void ChangeBalance(Account account, decimal credit)
         {
             account.Balance += credit;
