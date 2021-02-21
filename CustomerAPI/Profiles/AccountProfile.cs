@@ -9,8 +9,9 @@ namespace CustomerAPI.Profiles
     {
         public AccountProfile()
         {
+            CreateMap<Transaction, TransactionDTO>();
+
             CreateMap<Account, AccountDTO>();
-            CreateMap<AccountDTO, Account>();
         }
     }
 }
