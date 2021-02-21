@@ -1,3 +1,4 @@
+using System;
 using CustomerAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,8 @@ namespace CustomerAPI
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<AccountContext>(opt =>
                 opt.UseSqlite(Configuration.GetConnectionString("AccountContext")));
