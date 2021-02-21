@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using CustomerAPI.Entities;
+﻿using System.Collections.Generic;
 
 namespace CustomerAPI.Models
 {
@@ -10,8 +8,8 @@ namespace CustomerAPI.Models
 
         public string LastName { get; set; }
 
-        public int Balance { get; set; }
+        public decimal Balance { get; set; }
 
-        public List<Account> Accounts { get; set; }
+        public List<AccountDTO> Accounts { get; set; }
     }
 }
