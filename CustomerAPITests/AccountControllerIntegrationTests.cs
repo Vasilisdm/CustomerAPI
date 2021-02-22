@@ -12,8 +12,10 @@ namespace CustomerAPITests
     public class AccountControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         #region CustomerReusableVariables
+        // existing customerId from SeedData
         private readonly Guid customerId = new Guid("d20b0d04-d371-48b7-99aa-0e2ac74ff98e");
         #endregion
+
 
         [Fact]
         public async void OpenAccountForCustomer_WhenCustomerIdDoesNotExists_ReturnsNotFound()
@@ -30,13 +32,14 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
+                testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount",
                 stringContent);
 
             Assert.NotNull(accountResponse);
             Assert.Equal("Not Found", accountResponse.ReasonPhrase);
             Assert.Equal(StatusCodes.Status404NotFound, (double)accountResponse.StatusCode);
         }
+
 
         [Fact]
         public async void OpenAccountForCustomer_WhenInitialCreditIsZero_CreatesNewAccountWithNoTransactions()
@@ -50,10 +53,10 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
+                testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}",
                 stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
+            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(accountResponse);
@@ -63,6 +66,7 @@ namespace CustomerAPITests
             Assert.Single(customer.Accounts);
             Assert.Empty(customer.Accounts[0].Transactions);
         }
+
 
         [Fact]
         public async void OpenAccountForCustomer_WhenBothCustomerIdAndInitialCreditHaveValue_CreatesNewAccountWithBalanceAndTransaction()
@@ -76,10 +80,10 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
+                testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}",
                 stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
+            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(accountResponse);
@@ -87,6 +91,7 @@ namespace CustomerAPITests
             Assert.Single(customer.Accounts);
             Assert.Single(customer.Accounts[0].Transactions);
         }
+
 
         [Fact]
         public async void OpenAccountForCustomer_CreatesNewAccountEachTimeTheEndpointIsCalled()
@@ -101,15 +106,16 @@ namespace CustomerAPITests
 
             for (int i = 1; i <= 4; i++)
             {
-                await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+                await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
             }
            
-            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
+            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(customerResponse);
             Assert.Equal(4, customer.Accounts.Count);
         }
+
 
         [Fact]
         public async void OpenAccountForCustomer_ShouldHaveAsUserBalanceTheSumOfTheBalancesOfUserAccounts()
@@ -122,21 +128,21 @@ namespace CustomerAPITests
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
-            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 100;
-            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 200;
-            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 300;
-            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 400;
-            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/customeraccounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
+            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(customerResponse);
