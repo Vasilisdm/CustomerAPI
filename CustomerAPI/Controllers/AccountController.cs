@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using CustomerAPI.Entities;
 using CustomerAPI.Models;
@@ -10,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerAPI.Controllers
 {
     [ApiController]
-    [Route("api/accounts/{customerId}/currentaccount")]
+    [Route("api/customeraccounts/{customerId}/currentaccount")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
@@ -54,6 +52,7 @@ namespace CustomerAPI.Controllers
             return Ok(_mapper.Map<AccountDTO>(accountForCustomer));
         }
 
+
         [HttpPost("{initialCredit}")]
         public ActionResult<AccountDTO> OpenAccountForCustomer(Guid customerId, decimal initialCredit)
         {
@@ -86,37 +85,6 @@ namespace CustomerAPI.Controllers
             }, accountToReturn);
         }
 
-        [HttpGet()]
-        public ActionResult<CustomerDTO> GetCustomerAccountInfo(Guid customerId)
-        {
-            if (customerId == Guid.Empty)
-            {
-                throw new ArgumentNullException(nameof(customerId));
-            }
-
-            var customerFromRepo = _customerRepository.GetCustomer(customerId);
-            if (customerFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var customerAccounts = new List<AccountDTO>();
-            foreach (var account in customerFromRepo.Accounts)
-            {
-                var accountDTO = _mapper.Map<AccountDTO>(account);
-                customerAccounts.Add(accountDTO);
-            }
-
-            var customerToReturn = new CustomerDTO
-            {
-                FirstName = customerFromRepo.FirstName,
-                LastName = customerFromRepo.LastName,
-                Balance = customerFromRepo.Accounts.Sum(a => a.Balance),
-                Accounts = customerAccounts
-            };
-
-            return Ok(customerToReturn);
-        }
 
         #region HelperMethods
         private Account GetAccount(Guid accountId)
