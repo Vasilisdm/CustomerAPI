@@ -23,7 +23,7 @@ LastName, Balance, Accounts and a list of transactions for each account will be 
 * WebApplicationFactory: Factory for bootstrapping an application in memory for functional end to end tests.
 * CI/CD: The project is deployed in Microsoft's Azure.
 
-## Azure URI
+## Azure URL
 https://bvcustomerapi.azurewebsites.net
 
 ## Contributor
