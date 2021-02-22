@@ -30,7 +30,7 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}",
+                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
                 stringContent);
 
             Assert.NotNull(accountResponse);
@@ -50,10 +50,10 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}",
+                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
                 stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}/accounts/");
+            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(accountResponse);
@@ -76,10 +76,10 @@ namespace CustomerAPITests
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
             var accountResponse = await
-                testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}",
+                testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}",
                 stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}/accounts/");
+            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(accountResponse);
@@ -101,10 +101,10 @@ namespace CustomerAPITests
 
             for (int i = 1; i <= 4; i++)
             {
-                await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+                await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
             }
            
-            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}/accounts/");
+            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(customerResponse);
@@ -122,21 +122,21 @@ namespace CustomerAPITests
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(new { customerId, initialCredit }));
 
-            await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 100;
-            await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 200;
-            await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 300;
-            await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
             initialCredit = 400;
-            await testClient.PostAsync($"api/customers/{customerId}/accounts/{initialCredit}", stringContent);
+            await testClient.PostAsync($"api/accounts/{customerId}/currentaccount/{initialCredit}", stringContent);
 
-            var customerResponse = await testClient.GetStringAsync($"api/customers/{customerId}/accounts/");
+            var customerResponse = await testClient.GetStringAsync($"api/accounts/{customerId}/currentaccount/");
             var customer = JsonConvert.DeserializeObject<CustomerDTO>(customerResponse);
 
             Assert.NotNull(customerResponse);

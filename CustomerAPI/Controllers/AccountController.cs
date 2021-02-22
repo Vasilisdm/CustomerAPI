@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerAPI.Controllers
 {
     [ApiController]
-    [Route("api/customers/{customerId}/accounts")]
+    [Route("api/accounts/{customerId}/currentaccount")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
