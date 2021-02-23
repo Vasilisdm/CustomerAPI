@@ -21,7 +21,11 @@ LastName, Balance, Accounts and a list of transactions for each account will be 
 * SQLite
 * Automapper
 * WebApplicationFactory: Factory for bootstrapping an application in memory for functional end to end tests.
-* CI/CD: The project is deployed in Microsoft's Azure.
+
+## CI/CD
+Application makes use of Continuous Integration and Delivery by deploying it to Azure.
+Any commit made to Github repo will trigger a build in Azure, after a successful deployment,  
+the new version of the application will be running.
 
 ## Azure URL
 https://bvcustomerapi.azurewebsites.net
