@@ -32,7 +32,7 @@ https://bvcustomerapi.azurewebsites.net
 ## Set application up locally
 In order to set the application locally you have to download [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0) 
 and Microsoft's [visual studio](https://visualstudio.microsoft.com/downloads/). 
-After that clone/download the repository to your machine, open the applicatoin in visual studio wait untill all the packages are restored and just click run(play
+After that clone/download the repository to your machine, open the application in visual studio wait untill all the packages are restored and just click run(play
 button). The application will run regardless your platform's operating system(Windows, Mac)
 
 ## Contributor
