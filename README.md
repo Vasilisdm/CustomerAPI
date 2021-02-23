@@ -20,7 +20,11 @@ LastName, Balance, Accounts and a list of transactions for each account will be 
 * Entity Framework
 * SQLite
 * Automapper
-* WebApplicationFactory: Factory for bootstrapping an application in memory for functional end to end tests.
+* WebApplicationFactory
+
+## Integration Testing 
+The solution contains a testing project which takes advantage of [WebApplicationFactory](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-5.0) which is basically used in order to load the application in memory, and that enables the developer to execute integration tests without the
+need of an API instance running on a server.
 
 ## CI/CD
 Application makes use of Continuous Integration and Delivery by being deployed in Microsoft's Azure. Any commit made to Github repo will trigger a build process in
