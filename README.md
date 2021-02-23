@@ -23,17 +23,16 @@ LastName, Balance, Accounts and a list of transactions for each account will be 
 * WebApplicationFactory: Factory for bootstrapping an application in memory for functional end to end tests.
 
 ## CI/CD
-Application makes use of Continuous Integration and Delivery by being deployed in Microsoft's Azure.
-Any commit made to Github repo will trigger a build process in Azure. After a successful build,  
-the new version of the application will be running.
+Application makes use of Continuous Integration and Delivery by being deployed in Microsoft's Azure. Any commit made to Github repo will trigger a build process in
+Azure. After a successful build, the new version of the application will be running.
 
 ## Azure URL
 https://bvcustomerapi.azurewebsites.net
 
 ## Set application up locally
-In order to set the application locally you have to download .Net 5 SDK(https://dotnet.microsoft.com/download/dotnet/5.0) 
-and Microsoft's visual studio. After that clone/download the repository to your machine, load it in visual studio wait untill
-all the packages are restored and just click run(play button).
+In order to set the application locally you have to download [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0) 
+and Microsoft's [visual studio](https://visualstudio.microsoft.com/downloads/). 
+After that clone/download the repository to your machine, load it in visual studio wait untill all the packages are restored and just click run(play button).
 
 ## Contributor
 [Vasilis Dimitriou](https://github.com/Vasilisdm)
