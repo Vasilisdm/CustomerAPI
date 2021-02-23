@@ -24,7 +24,7 @@ LastName, Balance, Accounts and a list of transactions for each account will be 
 
 ## CI/CD
 Application makes use of Continuous Integration and Delivery by being deployed in Microsoft's Azure. Any commit made to Github repo will trigger a build process in
-Azure. After a successful build, the new version of the application will be running.
+Azure. After a successful build, the new version of the application will be running and can be access from the link provided in the Azure url section.
 
 ## Azure URL
 https://bvcustomerapi.azurewebsites.net
@@ -32,7 +32,8 @@ https://bvcustomerapi.azurewebsites.net
 ## Set application up locally
 In order to set the application locally you have to download [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0) 
 and Microsoft's [visual studio](https://visualstudio.microsoft.com/downloads/). 
-After that clone/download the repository to your machine, load it in visual studio wait untill all the packages are restored and just click run(play button).
+After that clone/download the repository to your machine, open the applicatoin in visual studio wait untill all the packages are restored and just click run(play
+button). The application will run regardless your platform's operating system(Windows, Mac)
 
 ## Contributor
 [Vasilis Dimitriou](https://github.com/Vasilisdm)
